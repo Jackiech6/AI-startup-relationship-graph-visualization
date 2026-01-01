@@ -10,6 +10,9 @@ interface AiSummaryResponse {
   error?: string
 }
 
+// Mark this route as dynamic to prevent build-time analysis
+export const dynamic = 'force-dynamic'
+
 // Simple in-memory cache
 const cache = new Map<string, { summary: string; timestamp: number }>()
 const CACHE_TTL = 1000 * 60 * 60 // 1 hour

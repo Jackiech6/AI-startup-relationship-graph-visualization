@@ -4,9 +4,16 @@
 import OpenAI from 'openai'
 import type { Startup, Person, GraphNode } from './types'
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-})
+// Lazy-load OpenAI client to avoid build-time errors when API key is not available
+function getOpenAIClient(): OpenAI {
+  const apiKey = process.env.OPENAI_API_KEY
+  if (!apiKey) {
+    throw new Error('OPENAI_API_KEY environment variable is not set')
+  }
+  return new OpenAI({
+    apiKey,
+  })
+}
 
 const DEFAULT_MODEL = process.env.OPENAI_MODEL || 'gpt-3.5-turbo'
 const DEFAULT_MAX_TOKENS = parseInt(process.env.OPENAI_MAX_TOKENS || '200', 10)
@@ -37,6 +44,7 @@ Connected founders: ${neighborNames || 'None'}
 Provide a concise summary in 2-3 sentences, followed by 3 strategic questions.`
 
   try {
+    const openai = getOpenAIClient()
     const response = await openai.chat.completions.create({
       model: DEFAULT_MODEL,
       messages: [
@@ -78,6 +86,7 @@ Connected startups: ${neighborNames || 'None'}
 Provide a concise summary in 2-3 sentences about their focus, followed by suggestions for 2-3 related startups or areas they might explore.`
 
   try {
+    const openai = getOpenAIClient()
     const response = await openai.chat.completions.create({
       model: DEFAULT_MODEL,
       messages: [

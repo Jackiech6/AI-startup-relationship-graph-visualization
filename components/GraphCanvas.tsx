@@ -44,8 +44,7 @@ export default function GraphCanvas({
     if (nodes.length === 0) return []
     
     // Use dagre to calculate proper positions with structured layout
-    const nodesWithPositions = calculateLayout(nodes, edges, 'LR')
-    return nodesWithPositions
+    return calculateLayout(nodes, edges, 'LR')
   }, [nodes, edges])
 
   // Transform GraphNode to ReactFlow Node format
