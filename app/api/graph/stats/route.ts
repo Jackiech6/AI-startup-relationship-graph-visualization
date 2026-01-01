@@ -13,8 +13,17 @@ export async function GET() {
     const isCached = dataCache.get(cacheKey) !== null
     const isExpired = isCached ? dataCache.isExpired(cacheKey) : true
 
+    // Determine active data source
+    let dataSource = 'seed'
+    if (config.github.enabled) {
+      dataSource = 'github'
+    } else if (config.crunchbase.enabled) {
+      dataSource = 'crunchbase'
+    }
+
     return NextResponse.json({
-      dataSource: config.crunchbase.enabled ? 'crunchbase' : 'seed',
+      dataSource,
+      githubEnabled: config.github.enabled,
       crunchbaseEnabled: config.crunchbase.enabled,
       cacheEnabled: true,
       cacheStats: {
@@ -24,8 +33,14 @@ export async function GET() {
         isExpired,
       },
       config: {
-        fallbackToSeed: config.crunchbase.fallbackToSeed,
-        cacheTTL: config.crunchbase.cacheTTL,
+        github: {
+          fallbackToSeed: config.github.fallbackToSeed,
+          cacheTTL: config.github.cacheTTL,
+        },
+        crunchbase: {
+          fallbackToSeed: config.crunchbase.fallbackToSeed,
+          cacheTTL: config.crunchbase.cacheTTL,
+        },
       },
     })
   } catch (error) {

@@ -7,6 +7,7 @@ import { z } from 'zod'
 import { config } from './config'
 import { dataCache } from './cache'
 import { getCrunchbaseClient } from './crunchbase-client'
+import { getGitHubClient } from './github-client'
 import type {
   SeedData,
   Startup,
@@ -21,6 +22,11 @@ import type {
   CrunchbasePerson,
   CrunchbaseRelationship,
 } from './crunchbase-client'
+import type {
+  GitHubOrganization,
+  GitHubRepository,
+  GitHubContributor,
+} from './github-client'
 
 /**
  * Zod schemas for runtime validation
@@ -199,6 +205,35 @@ export function transformCrunchbaseRelationships(
 }
 
 /**
+ * Transform GitHub organizations to Startup array
+ */
+export function transformGitHubOrganizations(
+  orgs: GitHubOrganization[],
+  reposMap: Map<string, GitHubRepository[]>
+): Startup[] {
+  const client = getGitHubClient()
+  return orgs.map((org) => {
+    const repos = reposMap.get(org.login) || []
+    return client.mapGitHubToStartup(org, repos)
+  })
+}
+
+
+/**
+ * Transform GitHub contributors to Edge array
+ */
+export function transformGitHubContributorsToEdges(
+  contributors: GitHubContributor[],
+  orgId: string,
+  repoCreatedAt?: string
+): Edge[] {
+  const client = getGitHubClient()
+  return contributors.map((contributor) =>
+    client.mapContributorToEdge(contributor, orgId, repoCreatedAt)
+  )
+}
+
+/**
  * Extract domain tags from Crunchbase categories
  */
 export function extractDomainTags(
@@ -260,8 +295,105 @@ async function fetchFromCrunchbase(): Promise<SeedData> {
 }
 
 /**
+ * Fetch data from GitHub API
+ */
+async function fetchFromGitHub(): Promise<SeedData> {
+  const client = getGitHubClient()
+  const startups: Startup[] = []
+  const people: Person[] = []
+  const edges: Edge[] = []
+  const peopleMap = new Map<string, Person>()
+
+  // Search for organizations using configured search queries
+  const allOrgs: GitHubOrganization[] = []
+  for (const query of config.github.searchQueries) {
+    try {
+      const orgs = await client.fetchOrganizations(query, 20)
+      allOrgs.push(...orgs)
+    } catch (error) {
+      console.warn(`Failed to fetch organizations for query "${query}":`, error)
+    }
+  }
+
+  // Remove duplicates
+  const uniqueOrgs = Array.from(
+    new Map(allOrgs.map((org) => [org.login, org])).values()
+  ).slice(0, 50) // Limit to 50 organizations
+
+  // Fetch repositories for each organization
+  const reposMap = new Map<string, GitHubRepository[]>()
+  for (const org of uniqueOrgs) {
+    try {
+      const repos = await client.fetchOrganizationRepos(org.login)
+      reposMap.set(org.login, repos)
+
+      // Create startup from org and repos
+      const startup = client.mapGitHubToStartup(org, repos)
+      startups.push(startup)
+
+      // Get contributors from top repos (limit to top 5 to avoid too many API calls)
+      const topRepos = repos
+        .sort((a, b) => b.stargazers_count - a.stargazers_count)
+        .slice(0, 5)
+
+      for (const repo of topRepos) {
+        try {
+          const contributors = await client.fetchRepoContributors(org.login, repo.name)
+
+          for (const contributor of contributors.slice(0, 10)) {
+            // Limit to top 10 contributors per repo
+            // Fetch user details if not already fetched
+            if (!peopleMap.has(contributor.login)) {
+              try {
+                const user = await client.fetchUser(contributor.login)
+                const person = client.mapGitHubToPerson(user)
+                peopleMap.set(contributor.login, person)
+                people.push(person)
+              } catch (error) {
+                console.warn(`Failed to fetch user ${contributor.login}:`, error)
+                // Create minimal person from contributor data
+                const person: Person = {
+                  id: contributor.login,
+                  name: contributor.login,
+                  roles: [],
+                  keywords: ['Developer'],
+                  bio: `GitHub contributor: ${contributor.login}`,
+                }
+                peopleMap.set(contributor.login, person)
+                people.push(person)
+              }
+            }
+
+            // Create edge
+            const edge = client.mapContributorToEdge(
+              contributor,
+              startup.id,
+              repo.created_at
+            )
+            edges.push(edge)
+          }
+        } catch (error) {
+          console.warn(
+            `Failed to fetch contributors for ${org.login}/${repo.name}:`,
+            error
+          )
+        }
+      }
+    } catch (error) {
+      console.warn(`Failed to fetch repos for ${org.login}:`, error)
+    }
+  }
+
+  return {
+    startups,
+    people,
+    edges,
+  }
+}
+
+/**
  * Load and validate seed data, then parse to graph format
- * Now supports multiple data sources: Crunchbase API (with cache) or seed data fallback
+ * Now supports multiple data sources: GitHub API → Crunchbase API (with cache) → seed data fallback
  */
 export async function loadAndParseGraphData(): Promise<GraphData> {
   const cacheKey = 'graph-data'
@@ -272,7 +404,27 @@ export async function loadAndParseGraphData(): Promise<GraphData> {
     return parseGraphData(cached)
   }
 
-  // 2. Try Crunchbase API if enabled
+  // 2. Try GitHub API if enabled (free alternative, checked first)
+  if (config.github.enabled) {
+    try {
+      const githubData = await fetchFromGitHub()
+      const validated = validateData(githubData)
+
+      // Cache the result
+      dataCache.set(cacheKey, validated, config.github.cacheTTL)
+
+      return parseGraphData(validated)
+    } catch (error) {
+      console.error('GitHub API failed:', error)
+
+      // Fall through to other sources if fallback is enabled
+      if (!config.github.fallbackToSeed) {
+        throw error
+      }
+    }
+  }
+
+  // 3. Try Crunchbase API if enabled
   if (config.crunchbase.enabled) {
     try {
       const crunchbaseData = await fetchFromCrunchbase()
@@ -292,7 +444,7 @@ export async function loadAndParseGraphData(): Promise<GraphData> {
     }
   }
 
-  // 3. Fallback to seed data
+  // 4. Fallback to seed data
   const seedData = loadSeedData()
   const validatedData = validateData(seedData)
   return parseGraphData(validatedData)

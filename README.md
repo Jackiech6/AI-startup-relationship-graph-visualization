@@ -109,6 +109,7 @@ npm run format:check
 │   ├── graph-utils.ts    # Graph computation helpers
 │   ├── ai-client.ts      # LLM integration
 │   ├── layout.ts         # Layout algorithms
+│   ├── github-client.ts   # GitHub API client (free alternative)
 │   ├── crunchbase-client.ts  # Crunchbase API client
 │   ├── cache.ts          # In-memory cache
 │   └── config.ts         # Application configuration
@@ -130,7 +131,15 @@ npm run format:check
 - `OPENAI_MODEL` (optional): Model to use (default: `gpt-3.5-turbo`)
 - `OPENAI_MAX_TOKENS` (optional): Max tokens for responses (default: `200`)
 
-#### Crunchbase API Integration (Optional)
+#### GitHub API Integration (Free Alternative)
+- `GITHUB_ENABLED`: Set to `true` to enable GitHub API integration (default: `false`)
+- `GITHUB_API_KEY`: Your GitHub personal access token (optional but recommended for higher rate limits)
+- `GITHUB_CACHE_TTL`: Cache TTL in milliseconds (default: `86400000` = 24 hours)
+- `GITHUB_FALLBACK_TO_SEED`: Fallback to seed data on errors (default: `true`)
+
+See [GITHUB_INTEGRATION.md](./GITHUB_INTEGRATION.md) for detailed GitHub integration documentation.
+
+#### Crunchbase API Integration (Optional, Paid)
 - `CRUNCHBASE_ENABLED`: Set to `true` to enable Crunchbase API integration (default: `false`)
 - `CRUNCHBASE_API_KEY`: Your Crunchbase API key (required if enabled)
 - `CRUNCHBASE_CACHE_TTL`: Cache TTL in milliseconds (default: `86400000` = 24 hours)
@@ -157,9 +166,10 @@ See [CRUNCHBASE_INTEGRATION.md](./CRUNCHBASE_INTEGRATION.md) for detailed Crunch
 - ✅ Detail panel with node information
 - ✅ Connected nodes navigation
 - ✅ AI-powered summary generation
-- ✅ **Crunchbase API integration** (optional) - Fetch real-world startup data
+- ✅ **GitHub API integration** (free) - Fetch real-world startup data from GitHub
+- ✅ **Crunchbase API integration** (optional, paid) - Fetch data from Crunchbase
 - ✅ **Intelligent caching** - Reduce API calls with in-memory cache
-- ✅ **Automatic fallback** - Gracefully falls back to seed data on errors
+- ✅ **Automatic fallback** - Gracefully falls back between data sources
 - ✅ Responsive design
 - ✅ Production-ready deployment
 
