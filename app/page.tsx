@@ -9,9 +9,6 @@ import DetailPanel from '@/components/DetailPanel'
 import { filterGraph, findNodeById } from '@/lib/graph-utils'
 import type { GraphNode, GraphEdge, FilterCriteria, CompanyStage } from '@/lib/types'
 
-// Disable SSR for the main page since it uses client-side features
-export const dynamic = 'force-dynamic'
-
 export default function Home() {
   const [allNodes, setAllNodes] = useState<GraphNode[]>([])
   const [allEdges, setAllEdges] = useState<GraphEdge[]>([])
