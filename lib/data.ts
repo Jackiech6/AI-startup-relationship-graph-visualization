@@ -298,6 +298,10 @@ async function fetchFromCrunchbase(): Promise<SeedData> {
  * Fetch data from GitHub API
  */
 async function fetchFromGitHub(): Promise<SeedData> {
+  if (!config.github.enabled) {
+    throw new Error('GitHub API is not enabled')
+  }
+  
   const client = getGitHubClient()
   const startups: Startup[] = []
   const people: Person[] = []
@@ -306,19 +310,30 @@ async function fetchFromGitHub(): Promise<SeedData> {
 
   // Search for organizations using configured search queries
   const allOrgs: GitHubOrganization[] = []
+  console.log(`Searching GitHub for organizations with queries: ${config.github.searchQueries.join(', ')}`)
+  
   for (const query of config.github.searchQueries) {
     try {
       const orgs = await client.fetchOrganizations(query, 20)
+      console.log(`Found ${orgs.length} organizations for query "${query}"`)
       allOrgs.push(...orgs)
     } catch (error) {
-      console.warn(`Failed to fetch organizations for query "${query}":`, error)
+      console.error(`Failed to fetch organizations for query "${query}":`, error)
+      // Don't throw - continue with other queries
     }
+  }
+  
+  if (allOrgs.length === 0) {
+    console.warn('No organizations found from GitHub search queries')
+    throw new Error('No organizations found from GitHub API')
   }
 
   // Remove duplicates
   const uniqueOrgs = Array.from(
     new Map(allOrgs.map((org) => [org.login, org])).values()
   ).slice(0, 50) // Limit to 50 organizations
+  
+  console.log(`Processing ${uniqueOrgs.length} unique organizations`)
 
   // Fetch repositories for each organization
   const reposMap = new Map<string, GitHubRepository[]>()
@@ -397,6 +412,12 @@ async function fetchFromGitHub(): Promise<SeedData> {
     }
   }
 
+  console.log(`GitHub fetch complete: ${startups.length} startups, ${people.length} people, ${edges.length} edges`)
+  
+  if (startups.length === 0) {
+    throw new Error('No startups found from GitHub API')
+  }
+  
   return {
     startups,
     people,
@@ -420,7 +441,16 @@ export async function loadAndParseGraphData(): Promise<GraphData> {
   // 2. Try GitHub API if enabled (primary data source, enabled by default)
   if (config.github.enabled) {
     try {
+      console.log('Fetching data from GitHub API...')
       const githubData = await fetchFromGitHub()
+      
+      // Validate we got some data
+      if (githubData.startups.length === 0 && githubData.people.length === 0) {
+        console.warn('GitHub API returned empty data. Falling back to seed data.')
+        throw new Error('GitHub API returned no data')
+      }
+      
+      console.log(`GitHub API returned ${githubData.startups.length} startups and ${githubData.people.length} people`)
       const validated = validateData(githubData)
 
       // Cache the result
@@ -429,12 +459,16 @@ export async function loadAndParseGraphData(): Promise<GraphData> {
       return parseGraphData(validated)
     } catch (error) {
       console.error('GitHub API failed:', error)
+      console.error('Error details:', error instanceof Error ? error.message : String(error))
 
       // Fall through to other sources if fallback is enabled
       if (!config.github.fallbackToSeed) {
         throw error
       }
+      console.log('Falling back to seed data due to GitHub API failure')
     }
+  } else {
+    console.log('GitHub API is disabled. Using seed data.')
   }
 
   // 3. Try Crunchbase API if enabled
