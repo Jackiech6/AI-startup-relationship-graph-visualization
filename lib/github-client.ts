@@ -256,7 +256,14 @@ class GitHubClient {
       }
 
       const axiosError = error as AxiosError
-      if (axiosError.response?.status === 403) {
+      const status = axiosError.response?.status
+
+      // Don't retry 404 errors (resource doesn't exist)
+      if (status === 404) {
+        throw error
+      }
+
+      if (status === 403) {
         // Rate limit - check headers
         const retryAfter = parseInt(
           axiosError.response.headers['retry-after'] || '60',
@@ -267,7 +274,7 @@ class GitHubClient {
         return this.retryRequest(requestFn, retries - 1)
       }
 
-      if (axiosError.response?.status && axiosError.response.status >= 500) {
+      if (status && status >= 500) {
         // Server error - retry with exponential backoff
         const delay = Math.pow(2, this.maxRetries - retries) * 1000
         await new Promise((resolve) => setTimeout(resolve, delay))

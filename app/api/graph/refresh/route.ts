@@ -4,6 +4,9 @@ import { dataCache } from '@/lib/cache'
 import { config } from '@/lib/config'
 import type { GraphApiResponse } from '@/lib/types'
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+
 /**
  * POST /api/graph/refresh
  * Force refresh graph data from active API (GitHub or Crunchbase) - clears cache

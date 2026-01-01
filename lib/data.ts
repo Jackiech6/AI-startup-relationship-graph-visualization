@@ -349,7 +349,12 @@ async function fetchFromGitHub(): Promise<SeedData> {
                 const person = client.mapGitHubToPerson(user)
                 peopleMap.set(contributor.login, person)
                 people.push(person)
-              } catch (error) {
+              } catch (error: unknown) {
+                // Skip 404 errors (user doesn't exist) - don't log as warning
+                const axiosError = error as { response?: { status?: number } }
+                if (axiosError.response?.status === 404) {
+                  continue // Skip this user
+                }
                 console.warn(`Failed to fetch user ${contributor.login}:`, error)
                 // Create minimal person from contributor data
                 const person: Person = {
@@ -372,15 +377,23 @@ async function fetchFromGitHub(): Promise<SeedData> {
             )
             edges.push(edge)
           }
-        } catch (error) {
-          console.warn(
-            `Failed to fetch contributors for ${org.login}/${repo.name}:`,
-            error
-          )
+        } catch (error: unknown) {
+          // Skip 404 errors silently (repo might not exist or be private)
+          const axiosError = error as { response?: { status?: number } }
+          if (axiosError.response?.status !== 404) {
+            console.warn(
+              `Failed to fetch contributors for ${org.login}/${repo.name}:`,
+              error
+            )
+          }
         }
       }
-    } catch (error) {
-      console.warn(`Failed to fetch repos for ${org.login}:`, error)
+    } catch (error: unknown) {
+      // Skip 404 errors silently (org might not exist)
+      const axiosError = error as { response?: { status?: number } }
+      if (axiosError.response?.status !== 404) {
+        console.warn(`Failed to fetch repos for ${org.login}:`, error)
+      }
     }
   }
 

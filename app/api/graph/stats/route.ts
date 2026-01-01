@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server'
 import { dataCache } from '@/lib/cache'
 import { config } from '@/lib/config'
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic'
+
 /**
  * GET /api/graph/stats
  * Returns data source information (cache status, last update, etc.)
