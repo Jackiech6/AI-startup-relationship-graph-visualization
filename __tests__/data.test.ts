@@ -379,22 +379,22 @@ describe('Data Loading', () => {
   })
 
   describe('loadAndParseGraphData', () => {
-    it('should load and parse graph data successfully', () => {
-      const graphData = loadAndParseGraphData()
+    it('should load and parse graph data successfully', async () => {
+      const graphData = await loadAndParseGraphData()
       expect(graphData.nodes.length).toBeGreaterThan(0)
       expect(graphData.edges.length).toBeGreaterThan(0)
     })
 
-    it('should return valid graph structure', () => {
-      const graphData = loadAndParseGraphData()
+    it('should return valid graph structure', async () => {
+      const graphData = await loadAndParseGraphData()
       expect(graphData).toHaveProperty('nodes')
       expect(graphData).toHaveProperty('edges')
       expect(Array.isArray(graphData.nodes)).toBe(true)
       expect(Array.isArray(graphData.edges)).toBe(true)
     })
 
-    it('should have nodes with correct structure', () => {
-      const graphData = loadAndParseGraphData()
+    it('should have nodes with correct structure', async () => {
+      const graphData = await loadAndParseGraphData()
       const node = graphData.nodes[0]
       expect(node).toHaveProperty('id')
       expect(node).toHaveProperty('type')
@@ -402,8 +402,8 @@ describe('Data Loading', () => {
       expect(['startup', 'person']).toContain(node.type)
     })
 
-    it('should have edges with correct structure', () => {
-      const graphData = loadAndParseGraphData()
+    it('should have edges with correct structure', async () => {
+      const graphData = await loadAndParseGraphData()
       if (graphData.edges.length > 0) {
         const edge = graphData.edges[0]
         expect(edge).toHaveProperty('id')

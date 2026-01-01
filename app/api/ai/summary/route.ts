@@ -65,7 +65,7 @@ export async function POST(request: NextRequest): Promise<NextResponse<AiSummary
     }
 
     // Load graph data
-    const graphData = loadAndParseGraphData()
+    const graphData = await loadAndParseGraphData()
     const node = findNodeById(graphData.nodes, nodeId)
 
     if (!node) {

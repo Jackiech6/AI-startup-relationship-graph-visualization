@@ -6,14 +6,14 @@ import { buildGraph, findNodeById, getNeighbors, filterGraph } from '@/lib/graph
 
 describe('Integration Tests', () => {
   describe('Real Data Loading and Parsing', () => {
-    it('should load and parse real seed data', () => {
-      const graphData = loadAndParseGraphData()
+    it('should load and parse real seed data', async () => {
+      const graphData = await loadAndParseGraphData()
       expect(graphData.nodes.length).toBeGreaterThan(0)
       expect(graphData.edges.length).toBeGreaterThan(0)
     })
 
-    it('should have valid node relationships', () => {
-      const graphData = loadAndParseGraphData()
+    it('should have valid node relationships', async () => {
+      const graphData = await loadAndParseGraphData()
       
       // All edges should reference valid nodes
       const nodeIds = new Set(graphData.nodes.map((n) => n.id))
@@ -23,8 +23,8 @@ describe('Integration Tests', () => {
       }
     })
 
-    it('should have startups and people in the graph', () => {
-      const graphData = loadAndParseGraphData()
+    it('should have startups and people in the graph', async () => {
+      const graphData = await loadAndParseGraphData()
       const startups = graphData.nodes.filter((n) => n.type === 'startup')
       const people = graphData.nodes.filter((n) => n.type === 'person')
       
@@ -34,10 +34,10 @@ describe('Integration Tests', () => {
   })
 
   describe('Graph Utilities with Real Data', () => {
-    let graphData: ReturnType<typeof loadAndParseGraphData>
+    let graphData: Awaited<ReturnType<typeof loadAndParseGraphData>>
 
-    beforeEach(() => {
-      graphData = loadAndParseGraphData()
+    beforeEach(async () => {
+      graphData = await loadAndParseGraphData()
     })
 
     it('should find nodes by ID', () => {

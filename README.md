@@ -93,7 +93,7 @@ npm run format:check
 /
 ├── app/                    # Next.js App Router
 │   ├── api/               # API routes
-│   │   ├── graph/         # GET /api/graph
+│   │   ├── graph/         # GET /api/graph, POST /api/graph/refresh, GET /api/graph/stats
 │   │   └── ai/            # POST /api/ai/summary
 │   ├── page.tsx           # Main page
 │   └── layout.tsx         # Root layout
@@ -108,7 +108,10 @@ npm run format:check
 │   ├── data.ts           # Data loading and parsing
 │   ├── graph-utils.ts    # Graph computation helpers
 │   ├── ai-client.ts      # LLM integration
-│   └── layout.ts         # Layout algorithms
+│   ├── layout.ts         # Layout algorithms
+│   ├── crunchbase-client.ts  # Crunchbase API client
+│   ├── cache.ts          # In-memory cache
+│   └── config.ts         # Application configuration
 ├── data/                  # Seed data
 │   └── seed.json
 ├── __tests__/            # Unit tests
@@ -120,9 +123,20 @@ npm run format:check
 
 ### Environment Variables
 
-- `OPENAI_API_KEY` (required for AI features): Your OpenAI API key
+#### Required for AI Features
+- `OPENAI_API_KEY`: Your OpenAI API key
+
+#### Optional AI Configuration
 - `OPENAI_MODEL` (optional): Model to use (default: `gpt-3.5-turbo`)
 - `OPENAI_MAX_TOKENS` (optional): Max tokens for responses (default: `200`)
+
+#### Crunchbase API Integration (Optional)
+- `CRUNCHBASE_ENABLED`: Set to `true` to enable Crunchbase API integration (default: `false`)
+- `CRUNCHBASE_API_KEY`: Your Crunchbase API key (required if enabled)
+- `CRUNCHBASE_CACHE_TTL`: Cache TTL in milliseconds (default: `86400000` = 24 hours)
+- `CRUNCHBASE_FALLBACK_TO_SEED`: Fallback to seed data on errors (default: `true`)
+
+See [CRUNCHBASE_INTEGRATION.md](./CRUNCHBASE_INTEGRATION.md) for detailed Crunchbase integration documentation.
 
 ## 📦 Tech Stack
 
@@ -143,6 +157,9 @@ npm run format:check
 - ✅ Detail panel with node information
 - ✅ Connected nodes navigation
 - ✅ AI-powered summary generation
+- ✅ **Crunchbase API integration** (optional) - Fetch real-world startup data
+- ✅ **Intelligent caching** - Reduce API calls with in-memory cache
+- ✅ **Automatic fallback** - Gracefully falls back to seed data on errors
 - ✅ Responsive design
 - ✅ Production-ready deployment
 

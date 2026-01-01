@@ -5,10 +5,11 @@ import type { GraphApiResponse } from '@/lib/types'
 /**
  * GET /api/graph
  * Returns the graph data in React Flow format
+ * Supports Crunchbase API (with caching) or seed data fallback
  */
 export async function GET(): Promise<NextResponse<GraphApiResponse | { error: string }>> {
   try {
-    const graphData = loadAndParseGraphData()
+    const graphData = await loadAndParseGraphData()
 
     return NextResponse.json({
       nodes: graphData.nodes,

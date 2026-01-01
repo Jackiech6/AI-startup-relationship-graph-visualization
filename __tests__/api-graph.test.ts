@@ -52,33 +52,31 @@ describe('/api/graph endpoint', () => {
       ],
     }
 
-    loadAndParseGraphData.mockReturnValue(mockGraphData)
+    loadAndParseGraphData.mockResolvedValue(mockGraphData)
 
     // Test the data loading and parsing logic directly
-    const result = loadAndParseGraphData()
+    const result = await loadAndParseGraphData()
     expect(result).toEqual(mockGraphData)
     expect(result.nodes).toHaveLength(1)
     expect(result.edges).toHaveLength(1)
   })
 
-  it('should handle data loading errors', () => {
+  it('should handle data loading errors', async () => {
     const errorMessage = 'Failed to load data'
-    loadAndParseGraphData.mockImplementation(() => {
-      throw new Error(errorMessage)
-    })
+    loadAndParseGraphData.mockRejectedValue(new Error(errorMessage))
 
-    expect(() => loadAndParseGraphData()).toThrow(errorMessage)
+    await expect(loadAndParseGraphData()).rejects.toThrow(errorMessage)
   })
 
-  it('should return correct data structure', () => {
+  it('should return correct data structure', async () => {
     const mockGraphData = {
       nodes: [],
       edges: [],
     }
 
-    loadAndParseGraphData.mockReturnValue(mockGraphData)
+    loadAndParseGraphData.mockResolvedValue(mockGraphData)
 
-    const result = loadAndParseGraphData()
+    const result = await loadAndParseGraphData()
     expect(result).toHaveProperty('nodes')
     expect(result).toHaveProperty('edges')
     expect(Array.isArray(result.nodes)).toBe(true)

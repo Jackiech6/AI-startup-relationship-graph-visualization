@@ -17,8 +17,10 @@
   },
   "dependencies": {
     "@types/dagre": "^0.7.53",
+    "axios": "^1.13.2",
     "dagre": "^0.8.5",
     "next": "^14.2.5",
+    "node-cache": "^5.1.2",
     "openai": "^4.47.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

@@ -4,6 +4,9 @@
 import { readFileSync } from 'fs'
 import { join } from 'path'
 import { z } from 'zod'
+import { config } from './config'
+import { dataCache } from './cache'
+import { getCrunchbaseClient } from './crunchbase-client'
 import type {
   SeedData,
   Startup,
@@ -13,6 +16,11 @@ import type {
   GraphEdge,
   GraphData,
 } from './types'
+import type {
+  CrunchbaseOrganization,
+  CrunchbasePerson,
+  CrunchbaseRelationship,
+} from './crunchbase-client'
 
 /**
  * Zod schemas for runtime validation
@@ -159,11 +167,134 @@ export function parseGraphData(seedData: SeedData): GraphData {
 }
 
 /**
- * Load and validate seed data, then parse to graph format
+ * Transform Crunchbase organizations to Startup array
  */
-export function loadAndParseGraphData(): GraphData {
-  const rawData = loadSeedData()
-  const validatedData = validateData(rawData)
+export function transformCrunchbaseOrganizations(
+  orgs: CrunchbaseOrganization[]
+): Startup[] {
+  const client = getCrunchbaseClient()
+  return orgs.map((org) => client.mapCrunchbaseToStartup(org))
+}
+
+/**
+ * Transform Crunchbase people to Person array
+ */
+export function transformCrunchbasePeople(people: CrunchbasePerson[]): Person[] {
+  const client = getCrunchbaseClient()
+  return people.map((person) => client.mapCrunchbaseToPerson(person))
+}
+
+/**
+ * Transform Crunchbase relationships to Edge array
+ */
+export function transformCrunchbaseRelationships(
+  relationships: CrunchbaseRelationship[],
+  personId: string,
+  organizationId: string
+): Edge[] {
+  const client = getCrunchbaseClient()
+  return relationships.map((rel) =>
+    client.mapCrunchbaseToEdge(rel, personId, organizationId)
+  )
+}
+
+/**
+ * Extract domain tags from Crunchbase categories
+ */
+export function extractDomainTags(
+  categories: Array<{ value: string }> | undefined
+): string[] {
+  if (!categories) {
+    return []
+  }
+  return categories.map((cat) => cat.value)
+}
+
+/**
+ * Normalize funding stage from Crunchbase format
+ */
+export function normalizeFundingStage(crunchbaseStage?: string): string {
+  if (!crunchbaseStage) {
+    return 'seed'
+  }
+  return crunchbaseStage.toLowerCase().replace(/_/g, '-')
+}
+
+/**
+ * Fetch data from Crunchbase API
+ */
+async function fetchFromCrunchbase(): Promise<SeedData> {
+  const client = getCrunchbaseClient()
+
+  // Fetch organizations
+  const organizations = await client.fetchOrganizations({ limit: 100 })
+  const startups = transformCrunchbaseOrganizations(organizations)
+
+  // Fetch people (founders)
+  const peopleData = await client.fetchPeople({ limit: 100 })
+  const people = transformCrunchbasePeople(peopleData)
+
+  // Build edges from founder relationships
+  const edges: Edge[] = []
+  for (const org of organizations) {
+    try {
+      const relationships = await client.fetchFounderRelationships(org.uuid)
+      for (const rel of relationships) {
+        if (rel.relationships?.person?.uuid) {
+          const personId = rel.relationships.person.uuid
+          const edge = client.mapCrunchbaseToEdge(rel, personId, org.uuid)
+          edges.push(edge)
+        }
+      }
+    } catch (error) {
+      // Skip if relationship fetch fails
+      console.warn(`Failed to fetch relationships for ${org.uuid}:`, error)
+    }
+  }
+
+  return {
+    startups,
+    people,
+    edges,
+  }
+}
+
+/**
+ * Load and validate seed data, then parse to graph format
+ * Now supports multiple data sources: Crunchbase API (with cache) or seed data fallback
+ */
+export async function loadAndParseGraphData(): Promise<GraphData> {
+  const cacheKey = 'graph-data'
+
+  // 1. Try to load from cache
+  const cached = dataCache.get(cacheKey)
+  if (cached) {
+    return parseGraphData(cached)
+  }
+
+  // 2. Try Crunchbase API if enabled
+  if (config.crunchbase.enabled) {
+    try {
+      const crunchbaseData = await fetchFromCrunchbase()
+      const validated = validateData(crunchbaseData)
+
+      // Cache the result
+      dataCache.set(cacheKey, validated, config.crunchbase.cacheTTL)
+
+      return parseGraphData(validated)
+    } catch (error) {
+      console.error('Crunchbase API failed:', error)
+
+      // Fall through to seed data if fallback is enabled
+      if (!config.crunchbase.fallbackToSeed) {
+        throw error
+      }
+    }
+  }
+
+  // 3. Fallback to seed data
+  const seedData = loadSeedData()
+  const validatedData = validateData(seedData)
   return parseGraphData(validatedData)
 }
 
