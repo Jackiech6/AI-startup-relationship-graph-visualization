@@ -1,0 +1,884 @@
+{
+  "startups": [
+    {
+      "id": "startup-001",
+      "name": "NeuralForge",
+      "domainTags": ["Machine Learning", "Computer Vision", "Enterprise AI"],
+      "stage": "series-b",
+      "foundedYear": 2020,
+      "location": "San Francisco, CA",
+      "description": "Enterprise AI platform for computer vision applications"
+    },
+    {
+      "id": "startup-002",
+      "name": "CodeGen AI",
+      "domainTags": ["Developer Tools", "Code Generation", "LLMs"],
+      "stage": "series-a",
+      "foundedYear": 2022,
+      "location": "Palo Alto, CA",
+      "description": "AI-powered code generation and completion tools for developers"
+    },
+    {
+      "id": "startup-003",
+      "name": "MediAI Diagnostics",
+      "domainTags": ["Healthcare", "Medical Imaging", "Diagnostics"],
+      "stage": "seed",
+      "foundedYear": 2021,
+      "location": "Boston, MA",
+      "description": "AI-powered medical imaging and diagnostic platform"
+    },
+    {
+      "id": "startup-004",
+      "name": "VoiceFlow",
+      "domainTags": ["NLP", "Voice AI", "Conversational AI"],
+      "stage": "series-c",
+      "foundedYear": 2018,
+      "location": "New York, NY",
+      "description": "Conversational AI platform for voice and text interactions"
+    },
+    {
+      "id": "startup-005",
+      "name": "AutonomousDrones",
+      "domainTags": ["Autonomous Systems", "Drones", "Computer Vision"],
+      "stage": "series-a",
+      "foundedYear": 2019,
+      "location": "Seattle, WA",
+      "description": "AI-powered autonomous drone systems for logistics"
+    },
+    {
+      "id": "startup-006",
+      "name": "FinanceAI",
+      "domainTags": ["FinTech", "Fraud Detection", "Predictive Analytics"],
+      "stage": "series-b",
+      "foundedYear": 2019,
+      "location": "New York, NY",
+      "description": "AI-powered fraud detection and financial risk analysis"
+    },
+    {
+      "id": "startup-007",
+      "name": "EduMind",
+      "domainTags": ["EdTech", "Personalized Learning", "NLP"],
+      "stage": "seed",
+      "foundedYear": 2022,
+      "location": "Austin, TX",
+      "description": "Personalized AI tutoring and learning platform"
+    },
+    {
+      "id": "startup-008",
+      "name": "RoboWarehouse",
+      "domainTags": ["Robotics", "Logistics", "Automation"],
+      "stage": "series-a",
+      "foundedYear": 2020,
+      "location": "San Francisco, CA",
+      "description": "AI-driven warehouse automation and robotics"
+    },
+    {
+      "id": "startup-009",
+      "name": "ContentGen AI",
+      "domainTags": ["Content Creation", "LLMs", "Marketing"],
+      "stage": "seed",
+      "foundedYear": 2023,
+      "location": "Los Angeles, CA",
+      "description": "AI content generation platform for marketers"
+    },
+    {
+      "id": "startup-010",
+      "name": "CogniHealth",
+      "domainTags": ["Healthcare", "Mental Health", "NLP"],
+      "stage": "series-a",
+      "foundedYear": 2021,
+      "location": "Boston, MA",
+      "description": "AI-powered mental health assessment and support platform"
+    },
+    {
+      "id": "startup-011",
+      "name": "AgriTech AI",
+      "domainTags": ["Agriculture", "Computer Vision", "IoT"],
+      "stage": "seed",
+      "foundedYear": 2022,
+      "location": "Des Moines, IA",
+      "description": "AI-driven precision agriculture and crop monitoring"
+    },
+    {
+      "id": "startup-012",
+      "name": "LegalMind",
+      "domainTags": ["Legal Tech", "Document Analysis", "NLP"],
+      "stage": "series-a",
+      "foundedYear": 2020,
+      "location": "San Francisco, CA",
+      "description": "AI-powered legal document analysis and research"
+    },
+    {
+      "id": "startup-013",
+      "name": "RetailAI",
+      "domainTags": ["Retail", "Recommendation Systems", "Personalization"],
+      "stage": "series-b",
+      "foundedYear": 2018,
+      "location": "New York, NY",
+      "description": "AI-driven retail personalization and recommendation engine"
+    },
+    {
+      "id": "startup-014",
+      "name": "SecureNet AI",
+      "domainTags": ["Cybersecurity", "Threat Detection", "Anomaly Detection"],
+      "stage": "series-a",
+      "foundedYear": 2021,
+      "location": "Arlington, VA",
+      "description": "AI-powered cybersecurity threat detection and prevention"
+    },
+    {
+      "id": "startup-015",
+      "name": "VideoGen AI",
+      "domainTags": ["Video Generation", "Content Creation", "Computer Vision"],
+      "stage": "seed",
+      "foundedYear": 2023,
+      "location": "San Francisco, CA",
+      "description": "AI video generation and editing platform"
+    },
+    {
+      "id": "startup-016",
+      "name": "EnergyOpt",
+      "domainTags": ["Energy", "Optimization", "Predictive Analytics"],
+      "stage": "seed",
+      "foundedYear": 2022,
+      "location": "Boulder, CO",
+      "description": "AI-powered energy consumption optimization"
+    },
+    {
+      "id": "startup-017",
+      "name": "TransportAI",
+      "domainTags": ["Transportation", "Route Optimization", "Autonomous Systems"],
+      "stage": "series-a",
+      "foundedYear": 2020,
+      "location": "Pittsburgh, PA",
+      "description": "AI-driven transportation and logistics optimization"
+    },
+    {
+      "id": "startup-018",
+      "name": "DesignAI",
+      "domainTags": ["Design", "Creative AI", "Computer Vision"],
+      "stage": "seed",
+      "foundedYear": 2023,
+      "location": "San Francisco, CA",
+      "description": "AI-powered design tools and creative assistance"
+    },
+    {
+      "id": "startup-019",
+      "name": "HRTech AI",
+      "domainTags": ["HR Tech", "Recruitment", "NLP"],
+      "stage": "series-a",
+      "foundedYear": 2021,
+      "location": "New York, NY",
+      "description": "AI-powered recruitment and HR analytics platform"
+    },
+    {
+      "id": "startup-020",
+      "name": "SupplyChain AI",
+      "domainTags": ["Supply Chain", "Logistics", "Predictive Analytics"],
+      "stage": "series-b",
+      "foundedYear": 2019,
+      "location": "Chicago, IL",
+      "description": "AI-driven supply chain optimization and forecasting"
+    },
+    {
+      "id": "startup-021",
+      "name": "ClimateAI",
+      "domainTags": ["Climate Tech", "Predictive Analytics", "Environmental"],
+      "stage": "seed",
+      "foundedYear": 2022,
+      "location": "San Francisco, CA",
+      "description": "AI-powered climate modeling and environmental analysis"
+    },
+    {
+      "id": "startup-022",
+      "name": "MusicGen AI",
+      "domainTags": ["Music", "Creative AI", "Audio Processing"],
+      "stage": "seed",
+      "foundedYear": 2023,
+      "location": "Los Angeles, CA",
+      "description": "AI music composition and audio generation platform"
+    },
+    {
+      "id": "startup-023",
+      "name": "CustomerAI",
+      "domainTags": ["Customer Service", "Chatbots", "NLP"],
+      "stage": "series-a",
+      "foundedYear": 2020,
+      "location": "San Francisco, CA",
+      "description": "AI-powered customer service automation platform"
+    },
+    {
+      "id": "startup-024",
+      "name": "DataForge AI",
+      "domainTags": ["Data Analytics", "MLOps", "Data Processing"],
+      "stage": "series-a",
+      "foundedYear": 2021,
+      "location": "Palo Alto, CA",
+      "description": "AI-powered data analytics and MLOps platform"
+    },
+    {
+      "id": "startup-025",
+      "name": "RealEstate AI",
+      "domainTags": ["Real Estate", "Computer Vision", "Predictive Analytics"],
+      "stage": "seed",
+      "foundedYear": 2022,
+      "location": "New York, NY",
+      "description": "AI-powered real estate valuation and market analysis"
+    }
+  ],
+  "people": [
+    {
+      "id": "person-001",
+      "name": "Alex Chen",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Machine Learning", "Computer Vision", "Entrepreneurship"],
+      "bio": "Former ML engineer at Google, PhD in Computer Science from Stanford"
+    },
+    {
+      "id": "person-002",
+      "name": "Sarah Johnson",
+      "roles": ["Co-Founder", "CTO"],
+      "keywords": ["Deep Learning", "Neural Networks", "Engineering"],
+      "bio": "Ex-Tesla AI team lead, MS in Computer Science from MIT"
+    },
+    {
+      "id": "person-003",
+      "name": "Michael Park",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Developer Tools", "Software Engineering", "Product"],
+      "bio": "Former GitHub engineer, Y Combinator alum"
+    },
+    {
+      "id": "person-004",
+      "name": "Emily Rodriguez",
+      "roles": ["Co-Founder", "CPO"],
+      "keywords": ["Product Management", "Developer Experience", "UX"],
+      "bio": "Ex-Apple product manager, Stanford MBA"
+    },
+    {
+      "id": "person-005",
+      "name": "David Kim",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Healthcare", "Medical AI", "Regulatory Affairs"],
+      "bio": "MD/PhD, former FDA advisor, Harvard Medical School"
+    },
+    {
+      "id": "person-006",
+      "name": "Jessica Wang",
+      "roles": ["Co-Founder", "CTO"],
+      "keywords": ["Medical Imaging", "Computer Vision", "Research"],
+      "bio": "PhD in Biomedical Engineering, MIT researcher"
+    },
+    {
+      "id": "person-007",
+      "name": "Robert Taylor",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["NLP", "Conversational AI", "Enterprise"],
+      "bio": "Ex-IBM Watson team, PhD in Computational Linguistics"
+    },
+    {
+      "id": "person-008",
+      "name": "Maria Garcia",
+      "roles": ["Co-Founder", "Head of Engineering"],
+      "keywords": ["Voice AI", "Speech Recognition", "ML Engineering"],
+      "bio": "Former Amazon Alexa engineer, MS from Carnegie Mellon"
+    },
+    {
+      "id": "person-009",
+      "name": "James Anderson",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Autonomous Systems", "Robotics", "Control Systems"],
+      "bio": "Ex-Uber ATG engineer, PhD in Robotics from CMU"
+    },
+    {
+      "id": "person-010",
+      "name": "Lisa Thompson",
+      "roles": ["Co-Founder", "CTO"],
+      "keywords": ["Computer Vision", "Sensor Fusion", "Safety"],
+      "bio": "Former Waymo engineer, Stanford PhD"
+    },
+    {
+      "id": "person-011",
+      "name": "Christopher Lee",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["FinTech", "Risk Analytics", "Banking"],
+      "bio": "Former JPMorgan quant, PhD in Financial Mathematics"
+    },
+    {
+      "id": "person-012",
+      "name": "Amanda White",
+      "roles": ["Co-Founder", "Head of Data Science"],
+      "keywords": ["Fraud Detection", "Anomaly Detection", "ML"],
+      "bio": "Ex-PayPal data scientist, MS in Statistics from UC Berkeley"
+    },
+    {
+      "id": "person-013",
+      "name": "Daniel Martinez",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["EdTech", "Personalized Learning", "Education"],
+      "bio": "Former Khan Academy engineer, Harvard Ed School"
+    },
+    {
+      "id": "person-014",
+      "name": "Rachel Brown",
+      "roles": ["Co-Founder", "Head of Product"],
+      "keywords": ["Learning Analytics", "Adaptive Systems", "Pedagogy"],
+      "bio": "EdTech product expert, Stanford Learning Sciences PhD"
+    },
+    {
+      "id": "person-015",
+      "name": "Kevin Zhang",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Robotics", "Automation", "Warehouse Logistics"],
+      "bio": "Ex-Amazon Robotics engineer, MIT Mechanical Engineering"
+    },
+    {
+      "id": "person-016",
+      "name": "Sophie Martin",
+      "roles": ["Co-Founder", "CTO"],
+      "keywords": ["Robotic Systems", "AI Planning", "Optimization"],
+      "bio": "Former Boston Dynamics engineer, PhD in Robotics"
+    },
+    {
+      "id": "person-017",
+      "name": "Thomas Wilson",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Content Creation", "Marketing", "Entrepreneurship"],
+      "bio": "Former marketing executive, Y Combinator alum"
+    },
+    {
+      "id": "person-018",
+      "name": "Olivia Davis",
+      "roles": ["Co-Founder", "Head of AI"],
+      "keywords": ["LLMs", "Content Generation", "NLP"],
+      "bio": "Ex-OpenAI researcher, PhD in NLP from Stanford"
+    },
+    {
+      "id": "person-019",
+      "name": "Ryan Clark",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Mental Health", "Healthcare", "AI Ethics"],
+      "bio": "Clinical psychologist and AI researcher, Harvard PhD"
+    },
+    {
+      "id": "person-020",
+      "name": "Nicole Adams",
+      "roles": ["Co-Founder", "Head of Engineering"],
+      "keywords": ["NLP", "Clinical AI", "Healthcare Tech"],
+      "bio": "Former Epic Systems engineer, MS in Health Informatics"
+    },
+    {
+      "id": "person-021",
+      "name": "Brian Foster",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Agriculture", "IoT", "Sustainable Tech"],
+      "bio": "Former John Deere engineer, Iowa State Agricultural Engineering"
+    },
+    {
+      "id": "person-022",
+      "name": "Laura Harris",
+      "roles": ["Co-Founder", "Head of Data Science"],
+      "keywords": ["Precision Agriculture", "Remote Sensing", "ML"],
+      "bio": "Agricultural data scientist, PhD in Agronomy"
+    },
+    {
+      "id": "person-023",
+      "name": "Mark Thompson",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Legal Tech", "Document Analysis", "Law"],
+      "bio": "Former attorney and legal tech entrepreneur, Harvard Law"
+    },
+    {
+      "id": "person-024",
+      "name": "Jennifer Lopez",
+      "roles": ["Co-Founder", "Head of AI"],
+      "keywords": ["Legal AI", "NLP", "Knowledge Graphs"],
+      "bio": "Legal AI researcher, PhD in Computer Science from Stanford"
+    },
+    {
+      "id": "person-025",
+      "name": "Steven Wright",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Retail", "E-commerce", "Personalization"],
+      "bio": "Former Amazon executive, Wharton MBA"
+    },
+    {
+      "id": "person-026",
+      "name": "Patricia Moore",
+      "roles": ["Co-Founder", "Head of ML"],
+      "keywords": ["Recommendation Systems", "ML", "Personalization"],
+      "bio": "Ex-Netflix ML engineer, PhD in Machine Learning"
+    },
+    {
+      "id": "person-027",
+      "name": "Andrew Young",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Cybersecurity", "Information Security", "Enterprise"],
+      "bio": "Former NSA cybersecurity analyst, MS in Cybersecurity"
+    },
+    {
+      "id": "person-028",
+      "name": "Michelle King",
+      "roles": ["Co-Founder", "Head of Engineering"],
+      "keywords": ["Threat Detection", "Anomaly Detection", "ML"],
+      "bio": "Ex-CrowdStrike engineer, MS in Computer Security"
+    },
+    {
+      "id": "person-029",
+      "name": "Nathan Scott",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Video Generation", "Creative AI", "Media"],
+      "bio": "Former Adobe engineer, film production background"
+    },
+    {
+      "id": "person-030",
+      "name": "Catherine Green",
+      "roles": ["Co-Founder", "Head of AI"],
+      "keywords": ["Computer Vision", "Video Processing", "Deep Learning"],
+      "bio": "Video AI researcher, PhD in Computer Vision from MIT"
+    },
+    {
+      "id": "person-031",
+      "name": "Jason Reed",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Energy", "Sustainability", "Optimization"],
+      "bio": "Former Tesla Energy engineer, MS in Energy Systems"
+    },
+    {
+      "id": "person-032",
+      "name": "Stephanie Hill",
+      "roles": ["Co-Founder", "Head of Data Science"],
+      "keywords": ["Energy Analytics", "Predictive Modeling", "Optimization"],
+      "bio": "Energy data scientist, PhD in Operations Research"
+    },
+    {
+      "id": "person-033",
+      "name": "Robert Kim",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Transportation", "Logistics", "Autonomous Vehicles"],
+      "bio": "Ex-Uber engineer, Carnegie Mellon Robotics"
+    },
+    {
+      "id": "person-034",
+      "name": "Diana Martinez",
+      "roles": ["Co-Founder", "Head of Engineering"],
+      "keywords": ["Route Optimization", "Operations Research", "ML"],
+      "bio": "Transportation systems engineer, PhD in Operations Research"
+    },
+    {
+      "id": "person-035",
+      "name": "Jonathan Turner",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Design", "Creative Tools", "Product"],
+      "bio": "Former Figma designer, design tool entrepreneur"
+    },
+    {
+      "id": "person-036",
+      "name": "Ashley Cooper",
+      "roles": ["Co-Founder", "Head of AI"],
+      "keywords": ["Creative AI", "Computer Vision", "Graphics"],
+      "bio": "AI graphics researcher, MS in Computer Graphics from Stanford"
+    },
+    {
+      "id": "person-037",
+      "name": "Matthew Bell",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["HR Tech", "Recruitment", "Enterprise"],
+      "bio": "Former LinkedIn executive, HR tech entrepreneur"
+    },
+    {
+      "id": "person-038",
+      "name": "Grace Lee",
+      "roles": ["Co-Founder", "Head of AI"],
+      "keywords": ["NLP", "Recruitment AI", "Matching Algorithms"],
+      "bio": "Recruitment AI researcher, PhD in NLP"
+    },
+    {
+      "id": "person-039",
+      "name": "William Chang",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Supply Chain", "Logistics", "Operations"],
+      "bio": "Former Amazon supply chain executive, MIT Operations"
+    },
+    {
+      "id": "person-040",
+      "name": "Victoria Park",
+      "roles": ["Co-Founder", "Head of Data Science"],
+      "keywords": ["Supply Chain Analytics", "Forecasting", "Optimization"],
+      "bio": "Supply chain data scientist, PhD in Operations Research"
+    },
+    {
+      "id": "person-041",
+      "name": "Richard Chen",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Climate Tech", "Environmental Science", "Sustainability"],
+      "bio": "Climate scientist and entrepreneur, PhD in Climate Science"
+    },
+    {
+      "id": "person-042",
+      "name": "Samantha Wright",
+      "roles": ["Co-Founder", "Head of AI"],
+      "keywords": ["Climate Modeling", "Predictive Analytics", "ML"],
+      "bio": "Climate AI researcher, PhD in Environmental Science"
+    },
+    {
+      "id": "person-043",
+      "name": "Paul Anderson",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Music", "Audio Tech", "Entertainment"],
+      "bio": "Music producer and audio engineer, tech entrepreneur"
+    },
+    {
+      "id": "person-044",
+      "name": "Emma Taylor",
+      "roles": ["Co-Founder", "Head of AI"],
+      "keywords": ["Audio AI", "Music Generation", "Signal Processing"],
+      "bio": "Audio AI researcher, PhD in Signal Processing from MIT"
+    },
+    {
+      "id": "person-045",
+      "name": "Frank Miller",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Customer Service", "Automation", "Enterprise"],
+      "bio": "Former Zendesk executive, customer service expert"
+    },
+    {
+      "id": "person-046",
+      "name": "Anna Rodriguez",
+      "roles": ["Co-Founder", "Head of AI"],
+      "keywords": ["Conversational AI", "Chatbots", "NLP"],
+      "bio": "Conversational AI expert, PhD in NLP from CMU"
+    },
+    {
+      "id": "person-047",
+      "name": "George Walker",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Data Analytics", "MLOps", "Infrastructure"],
+      "bio": "Former Databricks engineer, data infrastructure expert"
+    },
+    {
+      "id": "person-048",
+      "name": "Helen Johnson",
+      "roles": ["Co-Founder", "Head of Engineering"],
+      "keywords": ["MLOps", "Data Engineering", "ML Systems"],
+      "bio": "MLOps engineer, MS in Computer Science from UC Berkeley"
+    },
+    {
+      "id": "person-049",
+      "name": "Charles Brown",
+      "roles": ["Co-Founder", "CEO"],
+      "keywords": ["Real Estate", "PropTech", "Finance"],
+      "bio": "Real estate entrepreneur, former real estate analyst"
+    },
+    {
+      "id": "person-050",
+      "name": "Megan Davis",
+      "roles": ["Co-Founder", "Head of Data Science"],
+      "keywords": ["Real Estate Analytics", "Valuation Models", "ML"],
+      "bio": "Real estate data scientist, MS in Real Estate Finance"
+    }
+  ],
+  "edges": [
+    {
+      "sourceId": "person-001",
+      "targetId": "startup-001",
+      "type": "co-founded",
+      "sinceYear": 2020
+    },
+    {
+      "sourceId": "person-002",
+      "targetId": "startup-001",
+      "type": "co-founded",
+      "sinceYear": 2020
+    },
+    {
+      "sourceId": "person-003",
+      "targetId": "startup-002",
+      "type": "co-founded",
+      "sinceYear": 2022
+    },
+    {
+      "sourceId": "person-004",
+      "targetId": "startup-002",
+      "type": "co-founded",
+      "sinceYear": 2022
+    },
+    {
+      "sourceId": "person-005",
+      "targetId": "startup-003",
+      "type": "co-founded",
+      "sinceYear": 2021
+    },
+    {
+      "sourceId": "person-006",
+      "targetId": "startup-003",
+      "type": "co-founded",
+      "sinceYear": 2021
+    },
+    {
+      "sourceId": "person-007",
+      "targetId": "startup-004",
+      "type": "co-founded",
+      "sinceYear": 2018
+    },
+    {
+      "sourceId": "person-008",
+      "targetId": "startup-004",
+      "type": "co-founded",
+      "sinceYear": 2018
+    },
+    {
+      "sourceId": "person-009",
+      "targetId": "startup-005",
+      "type": "co-founded",
+      "sinceYear": 2019
+    },
+    {
+      "sourceId": "person-010",
+      "targetId": "startup-005",
+      "type": "co-founded",
+      "sinceYear": 2019
+    },
+    {
+      "sourceId": "person-011",
+      "targetId": "startup-006",
+      "type": "co-founded",
+      "sinceYear": 2019
+    },
+    {
+      "sourceId": "person-012",
+      "targetId": "startup-006",
+      "type": "co-founded",
+      "sinceYear": 2019
+    },
+    {
+      "sourceId": "person-013",
+      "targetId": "startup-007",
+      "type": "co-founded",
+      "sinceYear": 2022
+    },
+    {
+      "sourceId": "person-014",
+      "targetId": "startup-007",
+      "type": "co-founded",
+      "sinceYear": 2022
+    },
+    {
+      "sourceId": "person-015",
+      "targetId": "startup-008",
+      "type": "co-founded",
+      "sinceYear": 2020
+    },
+    {
+      "sourceId": "person-016",
+      "targetId": "startup-008",
+      "type": "co-founded",
+      "sinceYear": 2020
+    },
+    {
+      "sourceId": "person-017",
+      "targetId": "startup-009",
+      "type": "co-founded",
+      "sinceYear": 2023
+    },
+    {
+      "sourceId": "person-018",
+      "targetId": "startup-009",
+      "type": "co-founded",
+      "sinceYear": 2023
+    },
+    {
+      "sourceId": "person-019",
+      "targetId": "startup-010",
+      "type": "co-founded",
+      "sinceYear": 2021
+    },
+    {
+      "sourceId": "person-020",
+      "targetId": "startup-010",
+      "type": "co-founded",
+      "sinceYear": 2021
+    },
+    {
+      "sourceId": "person-021",
+      "targetId": "startup-011",
+      "type": "co-founded",
+      "sinceYear": 2022
+    },
+    {
+      "sourceId": "person-022",
+      "targetId": "startup-011",
+      "type": "co-founded",
+      "sinceYear": 2022
+    },
+    {
+      "sourceId": "person-023",
+      "targetId": "startup-012",
+      "type": "co-founded",
+      "sinceYear": 2020
+    },
+    {
+      "sourceId": "person-024",
+      "targetId": "startup-012",
+      "type": "co-founded",
+      "sinceYear": 2020
+    },
+    {
+      "sourceId": "person-025",
+      "targetId": "startup-013",
+      "type": "co-founded",
+      "sinceYear": 2018
+    },
+    {
+      "sourceId": "person-026",
+      "targetId": "startup-013",
+      "type": "co-founded",
+      "sinceYear": 2018
+    },
+    {
+      "sourceId": "person-027",
+      "targetId": "startup-014",
+      "type": "co-founded",
+      "sinceYear": 2021
+    },
+    {
+      "sourceId": "person-028",
+      "targetId": "startup-014",
+      "type": "co-founded",
+      "sinceYear": 2021
+    },
+    {
+      "sourceId": "person-029",
+      "targetId": "startup-015",
+      "type": "co-founded",
+      "sinceYear": 2023
+    },
+    {
+      "sourceId": "person-030",
+      "targetId": "startup-015",
+      "type": "co-founded",
+      "sinceYear": 2023
+    },
+    {
+      "sourceId": "person-031",
+      "targetId": "startup-016",
+      "type": "co-founded",
+      "sinceYear": 2022
+    },
+    {
+      "sourceId": "person-032",
+      "targetId": "startup-016",
+      "type": "co-founded",
+      "sinceYear": 2022
+    },
+    {
+      "sourceId": "person-033",
+      "targetId": "startup-017",
+      "type": "co-founded",
+      "sinceYear": 2020
+    },
+    {
+      "sourceId": "person-034",
+      "targetId": "startup-017",
+      "type": "co-founded",
+      "sinceYear": 2020
+    },
+    {
+      "sourceId": "person-035",
+      "targetId": "startup-018",
+      "type": "co-founded",
+      "sinceYear": 2023
+    },
+    {
+      "sourceId": "person-036",
+      "targetId": "startup-018",
+      "type": "co-founded",
+      "sinceYear": 2023
+    },
+    {
+      "sourceId": "person-037",
+      "targetId": "startup-019",
+      "type": "co-founded",
+      "sinceYear": 2021
+    },
+    {
+      "sourceId": "person-038",
+      "targetId": "startup-019",
+      "type": "co-founded",
+      "sinceYear": 2021
+    },
+    {
+      "sourceId": "person-039",
+      "targetId": "startup-020",
+      "type": "co-founded",
+      "sinceYear": 2019
+    },
+    {
+      "sourceId": "person-040",
+      "targetId": "startup-020",
+      "type": "co-founded",
+      "sinceYear": 2019
+    },
+    {
+      "sourceId": "person-041",
+      "targetId": "startup-021",
+      "type": "co-founded",
+      "sinceYear": 2022
+    },
+    {
+      "sourceId": "person-042",
+      "targetId": "startup-021",
+      "type": "co-founded",
+      "sinceYear": 2022
+    },
+    {
+      "sourceId": "person-043",
+      "targetId": "startup-022",
+      "type": "co-founded",
+      "sinceYear": 2023
+    },
+    {
+      "sourceId": "person-044",
+      "targetId": "startup-022",
+      "type": "co-founded",
+      "sinceYear": 2023
+    },
+    {
+      "sourceId": "person-045",
+      "targetId": "startup-023",
+      "type": "co-founded",
+      "sinceYear": 2020
+    },
+    {
+      "sourceId": "person-046",
+      "targetId": "startup-023",
+      "type": "co-founded",
+      "sinceYear": 2020
+    },
+    {
+      "sourceId": "person-047",
+      "targetId": "startup-024",
+      "type": "co-founded",
+      "sinceYear": 2021
+    },
+    {
+      "sourceId": "person-048",
+      "targetId": "startup-024",
+      "type": "co-founded",
+      "sinceYear": 2021
+    },
+    {
+      "sourceId": "person-049",
+      "targetId": "startup-025",
+      "type": "co-founded",
+      "sinceYear": 2022
+    },
+    {
+      "sourceId": "person-050",
+      "targetId": "startup-025",
+      "type": "co-founded",
+      "sinceYear": 2022
+    }
+  ]
+}
+
