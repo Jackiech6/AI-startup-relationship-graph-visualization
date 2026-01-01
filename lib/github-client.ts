@@ -266,7 +266,7 @@ class GitHubClient {
       if (status === 403) {
         // Rate limit - check headers
         const retryAfter = parseInt(
-          axiosError.response.headers['retry-after'] || '60',
+          axiosError.response?.headers['retry-after'] || '60',
           10
         )
         console.warn(`GitHub rate limit hit, waiting ${retryAfter} seconds`)
