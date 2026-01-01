@@ -131,21 +131,22 @@ npm run format:check
 - `OPENAI_MODEL` (optional): Model to use (default: `gpt-3.5-turbo`)
 - `OPENAI_MAX_TOKENS` (optional): Max tokens for responses (default: `200`)
 
-#### GitHub API Integration (Free Alternative)
-- `GITHUB_ENABLED`: Set to `true` to enable GitHub API integration (default: `false`)
-- `GITHUB_API_KEY`: Your GitHub personal access token (optional but recommended for higher rate limits)
+#### GitHub API Integration (Primary Data Source - Free)
+- `GITHUB_ENABLED`: Set to `false` to disable GitHub API integration (default: `true` - enabled by default)
+- `GITHUB_API_KEY`: Your GitHub personal access token (optional but recommended for higher rate limits: 5,000 req/hour vs 60)
 - `GITHUB_CACHE_TTL`: Cache TTL in milliseconds (default: `86400000` = 24 hours)
 - `GITHUB_FALLBACK_TO_SEED`: Fallback to seed data on errors (default: `true`)
+- `GITHUB_SEARCH_QUERIES`: Comma-separated search queries (default: `AI startup,machine learning,artificial intelligence`)
 
-See [GITHUB_INTEGRATION.md](./GITHUB_INTEGRATION.md) for detailed GitHub integration documentation.
+**GitHub is the primary data source** - it's enabled by default and provides free access to real-world startup data. See [GITHUB_INTEGRATION.md](./GITHUB_INTEGRATION.md) for detailed documentation.
 
-#### Crunchbase API Integration (Optional, Paid)
+#### Crunchbase API Integration (Optional, Paid Alternative)
 - `CRUNCHBASE_ENABLED`: Set to `true` to enable Crunchbase API integration (default: `false`)
 - `CRUNCHBASE_API_KEY`: Your Crunchbase API key (required if enabled)
 - `CRUNCHBASE_CACHE_TTL`: Cache TTL in milliseconds (default: `86400000` = 24 hours)
 - `CRUNCHBASE_FALLBACK_TO_SEED`: Fallback to seed data on errors (default: `true`)
 
-See [CRUNCHBASE_INTEGRATION.md](./CRUNCHBASE_INTEGRATION.md) for detailed Crunchbase integration documentation.
+Crunchbase is an optional paid alternative. If both are enabled, GitHub takes priority. See [CRUNCHBASE_INTEGRATION.md](./CRUNCHBASE_INTEGRATION.md) for detailed documentation.
 
 ## 📦 Tech Stack
 
@@ -166,8 +167,8 @@ See [CRUNCHBASE_INTEGRATION.md](./CRUNCHBASE_INTEGRATION.md) for detailed Crunch
 - ✅ Detail panel with node information
 - ✅ Connected nodes navigation
 - ✅ AI-powered summary generation
-- ✅ **GitHub API integration** (free) - Fetch real-world startup data from GitHub
-- ✅ **Crunchbase API integration** (optional, paid) - Fetch data from Crunchbase
+- ✅ **GitHub API integration** (primary, free) - Fetch real-world startup data from GitHub (enabled by default)
+- ✅ **Crunchbase API integration** (optional, paid alternative) - Fetch data from Crunchbase
 - ✅ **Intelligent caching** - Reduce API calls with in-memory cache
 - ✅ **Automatic fallback** - Gracefully falls back between data sources
 - ✅ Responsive design

@@ -6,15 +6,16 @@ import type { GraphApiResponse } from '@/lib/types'
 
 /**
  * POST /api/graph/refresh
- * Force refresh graph data from Crunchbase API (clears cache)
+ * Force refresh graph data from active API (GitHub or Crunchbase) - clears cache
  */
 export async function POST(): Promise<NextResponse<GraphApiResponse | { error: string }>> {
   try {
-    if (!config.crunchbase.enabled) {
+    // Check if any API is enabled
+    if (!config.github.enabled && !config.crunchbase.enabled) {
       return NextResponse.json(
         {
-          error: 'Crunchbase API is not enabled',
-          message: 'Set CRUNCHBASE_ENABLED=true to enable API integration',
+          error: 'No API is enabled',
+          message: 'Set GITHUB_ENABLED=true or CRUNCHBASE_ENABLED=true to enable API integration',
         },
         { status: 400 }
       )

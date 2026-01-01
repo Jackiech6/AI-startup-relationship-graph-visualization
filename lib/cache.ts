@@ -80,6 +80,14 @@ class DataCache {
       keys: Array.from(this.cache.keys()),
     }
   }
+
+  /**
+   * Get timestamp for a cache entry
+   */
+  getTimestamp(key: string): number | null {
+    const entry = this.cache.get(key)
+    return entry ? entry.timestamp : null
+  }
 }
 
 // Singleton instance

@@ -30,10 +30,13 @@ This guide explains how to deploy the AI Startup Ecosystem Graph application to 
    - In Railway dashboard, go to your project
    - Navigate to "Variables" tab
    - Add the following environment variables:
-     - `OPENAI_API_KEY`: Your OpenAI API key
+     - `OPENAI_API_KEY`: Your OpenAI API key (required for AI features)
+     - `GITHUB_API_KEY` (optional but recommended): Your GitHub personal access token for higher rate limits (5,000 req/hour vs 60)
      - `OPENAI_MODEL` (optional): Model to use (default: `gpt-3.5-turbo`)
      - `OPENAI_MAX_TOKENS` (optional): Max tokens (default: `200`)
      - `NODE_ENV`: Set to `production`
+     
+   **Note:** GitHub API is enabled by default. To disable it, set `GITHUB_ENABLED=false`.
 
 4. **Deploy**
    - Railway will automatically detect the Dockerfile
@@ -56,6 +59,7 @@ This guide explains how to deploy the AI Startup Ecosystem Graph application to 
 3. **Set Environment Variables**
    ```bash
    railway variables set OPENAI_API_KEY=your_key_here
+   railway variables set GITHUB_API_KEY=your_github_token_here  # Optional but recommended
    railway variables set NODE_ENV=production
    ```
 
@@ -69,7 +73,12 @@ This guide explains how to deploy the AI Startup Ecosystem Graph application to 
 Required:
 - `OPENAI_API_KEY`: Your OpenAI API key for AI features
 
+Recommended:
+- `GITHUB_API_KEY`: Your GitHub personal access token (increases rate limit from 60 to 5,000 requests/hour)
+
 Optional:
+- `GITHUB_ENABLED`: Set to `false` to disable GitHub API (default: `true`)
+- `GITHUB_SEARCH_QUERIES`: Comma-separated search queries (default: `AI startup,machine learning,artificial intelligence`)
 - `OPENAI_MODEL`: Model to use (default: `gpt-3.5-turbo`)
 - `OPENAI_MAX_TOKENS`: Maximum tokens for responses (default: `200`)
 - `PORT`: Port for the server (Railway sets this automatically)

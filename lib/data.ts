@@ -404,7 +404,7 @@ export async function loadAndParseGraphData(): Promise<GraphData> {
     return parseGraphData(cached)
   }
 
-  // 2. Try GitHub API if enabled (free alternative, checked first)
+  // 2. Try GitHub API if enabled (primary data source, enabled by default)
   if (config.github.enabled) {
     try {
       const githubData = await fetchFromGitHub()

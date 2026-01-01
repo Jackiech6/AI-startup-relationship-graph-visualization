@@ -6,8 +6,20 @@ import GraphCanvas from '@/components/GraphCanvas'
 import SearchBar from '@/components/SearchBar'
 import FilterPanel from '@/components/FilterPanel'
 import DetailPanel from '@/components/DetailPanel'
+import DataSourceIndicator from '@/components/DataSourceIndicator'
+import RefreshButton from '@/components/RefreshButton'
+import CacheStatus from '@/components/CacheStatus'
 import { filterGraph, findNodeById } from '@/lib/graph-utils'
 import type { GraphNode, GraphEdge, FilterCriteria, CompanyStage } from '@/lib/types'
+
+interface GraphStats {
+  dataSource: 'github' | 'crunchbase' | 'seed'
+  cacheStats: {
+    isCached: boolean
+    isExpired: boolean
+    timestamp: number | null
+  }
+}
 
 export default function Home() {
   const [allNodes, setAllNodes] = useState<GraphNode[]>([])
@@ -18,26 +30,48 @@ export default function Home() {
   const [selectedDomainTags, setSelectedDomainTags] = useState<string[]>([])
   const [selectedStages, setSelectedStages] = useState<CompanyStage[]>([])
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
+  const [stats, setStats] = useState<GraphStats | null>(null)
+
+  const fetchGraphData = useCallback(async () => {
+    try {
+      const response = await fetch('/api/graph')
+      if (!response.ok) {
+        throw new Error('Failed to fetch graph data')
+      }
+      const data = await response.json()
+      setAllNodes(data.nodes)
+      setAllEdges(data.edges)
+      setLoading(false)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Unknown error')
+      setLoading(false)
+    }
+  }, [])
+
+  const fetchStats = useCallback(async () => {
+    try {
+      const response = await fetch('/api/graph/stats')
+      if (response.ok) {
+        const data = await response.json()
+        setStats({
+          dataSource: data.dataSource,
+          cacheStats: data.cacheStats,
+        })
+      }
+    } catch (err) {
+      console.error('Failed to fetch stats:', err)
+    }
+  }, [])
 
   useEffect(() => {
-    async function fetchGraphData() {
-      try {
-        const response = await fetch('/api/graph')
-        if (!response.ok) {
-          throw new Error('Failed to fetch graph data')
-        }
-        const data = await response.json()
-        setAllNodes(data.nodes)
-        setAllEdges(data.edges)
-        setLoading(false)
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Unknown error')
-        setLoading(false)
-      }
-    }
-
     fetchGraphData()
-  }, [])
+    fetchStats()
+  }, [fetchGraphData, fetchStats])
+
+  const handleRefreshComplete = useCallback(() => {
+    fetchGraphData()
+    fetchStats()
+  }, [fetchGraphData, fetchStats])
 
   // Extract unique domain tags from all nodes
   const domainTags = useMemo(() => {
@@ -113,12 +147,29 @@ export default function Home() {
   return (
     <main className="w-full h-screen flex flex-col">
       {/* Top bar */}
-      <div className="bg-white border-b border-gray-200 p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-        <h1 className="text-xl md:text-2xl font-bold text-gray-800">
-          AI Startup Ecosystem Graph
-        </h1>
-        <div className="w-full md:flex-1 md:max-w-md">
-          <SearchBar onSearchChange={handleSearchChange} />
+      <div className="bg-white border-b border-gray-200 p-4 flex flex-col gap-4">
+        {/* First row: Title and Search */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <h1 className="text-xl md:text-2xl font-bold text-gray-800">
+            AI Startup Ecosystem Graph
+          </h1>
+          <div className="w-full md:flex-1 md:max-w-md">
+            <SearchBar onSearchChange={handleSearchChange} />
+          </div>
+        </div>
+        {/* Second row: Data source, refresh, and cache status */}
+        <div className="flex flex-wrap items-center gap-3 text-sm">
+          {stats && (
+            <>
+              <DataSourceIndicator dataSource={stats.dataSource} />
+              <RefreshButton onRefreshComplete={handleRefreshComplete} />
+              <CacheStatus
+                isCached={stats.cacheStats.isCached}
+                isExpired={stats.cacheStats.isExpired}
+                timestamp={stats.cacheStats.timestamp}
+              />
+            </>
+          )}
         </div>
       </div>
 
@@ -156,6 +207,7 @@ export default function Home() {
               allEdges={allEdges}
               onNodeClick={handleNodeClick}
               onClose={handleClosePanel}
+              dataSource={stats?.dataSource}
             />
           </div>
         )}

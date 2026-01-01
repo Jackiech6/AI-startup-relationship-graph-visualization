@@ -12,6 +12,7 @@ export async function GET() {
     const cacheKey = 'graph-data'
     const isCached = dataCache.get(cacheKey) !== null
     const isExpired = isCached ? dataCache.isExpired(cacheKey) : true
+    const timestamp = dataCache.getTimestamp(cacheKey)
 
     // Determine active data source
     let dataSource = 'seed'
@@ -31,6 +32,7 @@ export async function GET() {
         keys: cacheStats.keys,
         isCached,
         isExpired,
+        timestamp,
       },
       config: {
         github: {

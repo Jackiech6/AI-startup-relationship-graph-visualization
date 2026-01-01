@@ -12,7 +12,7 @@ export const config = {
     rateLimitDelay: parseInt(process.env.CRUNCHBASE_RATE_LIMIT_DELAY || '1000', 10),
   },
   github: {
-    enabled: process.env.GITHUB_ENABLED === 'true',
+    enabled: process.env.GITHUB_ENABLED !== 'false', // Enabled by default
     apiKey: process.env.GITHUB_API_KEY || '',
     baseUrl: process.env.GITHUB_BASE_URL || 'https://api.github.com',
     cacheTTL: parseInt(process.env.GITHUB_CACHE_TTL || '86400000', 10), // 24 hours in ms

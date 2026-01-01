@@ -1,6 +1,6 @@
 # GitHub API Integration
 
-This document describes the GitHub API integration for the AI Startup Ecosystem Graph application. GitHub API is a **free alternative** to Crunchbase for fetching real-world startup data.
+This document describes the GitHub API integration for the AI Startup Ecosystem Graph application. **GitHub API is the primary data source** (enabled by default) for fetching real-world startup data. It's free and provides comprehensive access to organizations, repositories, and contributors.
 
 ## Overview
 
@@ -10,7 +10,7 @@ The application now supports fetching data from the GitHub API, providing access
 - **Data Transformation**: Maps GitHub data to our internal data structures
 - **Intelligent Inference**: Infers funding stage, domain tags, and relationships from repository data
 - **Caching**: In-memory cache with TTL to reduce API calls
-- **Fallback Mechanism**: Automatically falls back to Crunchbase or seed data on errors
+- **Fallback Mechanism**: Automatically falls back to Crunchbase (if enabled) or seed data on errors
 
 ## Why GitHub API?
 
@@ -37,9 +37,9 @@ The application now supports fetching data from the GitHub API, providing access
 Add the following to your `.env.local` file:
 
 ```bash
-# GitHub API Configuration (Free alternative to Crunchbase)
-GITHUB_ENABLED=true                    # Set to 'true' to enable
-GITHUB_API_KEY=your_github_token_here  # Optional but recommended
+# GitHub API Configuration (Primary Data Source - Enabled by Default)
+GITHUB_ENABLED=true                    # Set to 'false' to disable (default: true)
+GITHUB_API_KEY=your_github_token_here  # Optional but recommended (5,000 req/hour vs 60)
 GITHUB_BASE_URL=https://api.github.com
 GITHUB_CACHE_TTL=86400000              # 24 hours in milliseconds
 GITHUB_FALLBACK_TO_SEED=true           # Fallback to seed data on errors
@@ -166,11 +166,15 @@ Languages are mapped to domain tags:
 
 ## Usage
 
-### Enabling GitHub Integration
+### GitHub Integration Status
 
-1. Set `GITHUB_ENABLED=true` in your `.env.local`
-2. (Optional) Add your `GITHUB_API_KEY` for higher rate limits
-3. Restart your development server
+**GitHub is enabled by default** - no configuration needed to get started!
+
+To customize:
+1. (Optional) Add your `GITHUB_API_KEY` for higher rate limits (5,000 req/hour vs 60)
+2. (Optional) Set `GITHUB_ENABLED=false` to disable GitHub API
+3. (Optional) Customize `GITHUB_SEARCH_QUERIES` to search for different types of organizations
+4. Restart your development server after changes
 
 ### Manual Refresh
 

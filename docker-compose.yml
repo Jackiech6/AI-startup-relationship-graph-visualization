@@ -12,5 +12,8 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY:-}
       - OPENAI_MODEL=${OPENAI_MODEL:-gpt-3.5-turbo}
       - OPENAI_MAX_TOKENS=${OPENAI_MAX_TOKENS:-200}
+      - GITHUB_ENABLED=${GITHUB_ENABLED:-true}
+      - GITHUB_API_KEY=${GITHUB_API_KEY:-}
+      - GITHUB_SEARCH_QUERIES=${GITHUB_SEARCH_QUERIES:-AI startup,machine learning,artificial intelligence}
     restart: unless-stopped
 
